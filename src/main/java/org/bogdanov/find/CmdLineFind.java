@@ -36,9 +36,7 @@ public class CmdLineFind {
             System.err.println("Unable to parse arguments! " + e);
             throw new IllegalArgumentException(e);
         }
-
         Set<File> foundFiles = find.find();
-
         if (foundFiles.isEmpty()) {
             System.out.println("File(s) not found!");
         } else {
@@ -47,7 +45,6 @@ public class CmdLineFind {
             }
         }
     }
-
     public Set<File> find() {
         Find find = new Find(recursively, directory, filenames);
         return find.find();
@@ -71,27 +68,21 @@ public class CmdLineFind {
     @Option(name="-d", required = false)
     private File directory = new File("").getAbsoluteFile();
 
-
     public Set<File> find() {
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("option " + directory + " is not a directory! ");
         }
-
         Set<File> files = new HashSet<>();
-
-
         if (!recursively) {
             File[] iterateFiles = directory.listFiles();
             if (iterateFiles == null)
                 return files;
-
             for (File file : iterateFiles) {
                 for (String searchedFilename : filenames)
                     if (file.getName().equals(searchedFilename) && file.isFile()) {
                         files.add(file);
                     }
             }
-
         } else {
             try {
                 Files.walkFileTree(directory.toPath(), new SimpleFileVisitor<>() {
@@ -111,8 +102,6 @@ public class CmdLineFind {
                 });
             } catch (IOException ignored) {}
         }
-
-
         return files;
     }
 
