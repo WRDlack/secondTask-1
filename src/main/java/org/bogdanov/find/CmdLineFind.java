@@ -20,10 +20,10 @@ public class CmdLineFind {
     @Argument(required = true)
     private String[] filenames;
 
-    @Option(name="-r", required = false)
+    @Option(name = "-r", required = false)
     private Boolean recursively = false;
 
-    @Option(name="-d", required = false)
+    @Option(name = "-d", required = false)
     private File directory = new File("").getAbsoluteFile();
 
     public static void main(String[] args) {
@@ -40,18 +40,19 @@ public class CmdLineFind {
         if (foundFiles.isEmpty()) {
             System.out.println("File(s) not found!");
         } else {
-            for (File file: foundFiles) {
+            for (File file : foundFiles) {
                 System.out.println("File found: " + file);
             }
         }
     }
-    public Set<File> find() {
+
+     Set<File> find() {
         Find find = new Find(recursively, directory, filenames);
         return find.find();
     }
 }
 
- class Find {
+class Find {
 
     public Find(boolean recursively, File directory, String[] filenames) {
         this.recursively = recursively;
@@ -62,13 +63,13 @@ public class CmdLineFind {
     @Argument(required = true)
     private String[] filenames;
 
-    @Option(name="-r", required = false)
+    @Option(name = "-r", required = false)
     private Boolean recursively = false;
 
-    @Option(name="-d", required = false)
+    @Option(name = "-d", required = false)
     private File directory = new File("").getAbsoluteFile();
 
-    public Set<File> find() {
+     Set<File> find() {
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("option " + directory + " is not a directory! ");
         }
@@ -100,7 +101,8 @@ public class CmdLineFind {
                     }
 
                 });
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         }
         return files;
     }
